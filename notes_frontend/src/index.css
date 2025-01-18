@@ -1,3 +1,36 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* Background Animation */
+
+@keyframes background {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
+  .animate-background {
+    animation: background 15s ease infinite;
+    background-size: 400% 400%;
+  }
+  
+  /* Pointer Animation */
+  button, input {
+    transition: all 0.3s ease;
+  }
+  
+  button:hover, input:hover {
+    transform: scale(1.05);
+  }
+  
+  /* Sound Effects for Buttons */
+  button:active {
+    transform: scale(0.95);
+  }
+  

@@ -8,10 +8,10 @@ function Project() {
   const [todos, setTodos] = useState([]);
 
   const addTodo = async (todo) => {
-    
     try {
       const response = await axios.post("http://127.0.0.1:8000/api/todos/", { title: todo });
       setTodos((prev) => [...prev, response.data]); 
+      new Audio('/sounds/add-task.mp3').play(); // Play sound when adding a task
     } catch (error) {
       console.log(error.message);
     }
@@ -23,6 +23,7 @@ function Project() {
       setTodos((prev) =>
         prev.map((prevtodo) => (prevtodo.id === id ? { ...prevtodo, ...todo } : prevtodo))
       );
+      new Audio('/sounds/edit-task.mp3').play(); // Play sound when editing a task
     } catch (error) {
       console.log(error.message);
     }
@@ -32,6 +33,7 @@ function Project() {
     try {
       await axios.delete(`http://127.0.0.1:8000/api/todos/${id}/`);
       setTodos((prev) => prev.filter((todo) => todo.id !== id));
+      new Audio('/sounds/delete-task.mp3').play(); // Play sound when deleting a task
     } catch (error) {
       console.log(error.message);
     }
@@ -67,20 +69,21 @@ function Project() {
 
   return (
     <TodoProvider value={{ todos, addTodo, update, deleteTodo, toggleComplete }}>
-      <div className="bg-[#172842] min-h-screen py-8">
-        <div className="w-full max-w-2xl mx-auto shadow-md rounded-lg px-4 py-3 text-white">
-          <h1 className="text-2xl font-bold text-center mb-8 mt-2">Manage Your Todos</h1>
-          <div className="mb-4">
-            <TodoForm />
-          </div>
-          <div className="flex flex-wrap gap-y-3">
-            {todos.map((todo) => (
-              <div key={todo.id} className="w-full">
-                <TodoItem todo={todo} />
-              </div>
-            ))}
-          </div>
-        </div>
+      <div className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 min-h-screen py-8 animate-background">
+      <div className="w-full max-w-2xl mx-auto shadow-md rounded-lg px-4 py-3 bg-gray-800 text-white">
+  <h1 className="text-2xl font-bold text-center mb-8 mt-2">Manage Your Todos</h1>
+  <div className="mb-4">
+    <TodoForm />
+  </div>
+  <div className="flex flex-wrap gap-y-3">
+    {todos.map((todo) => (
+      <div key={todo.id} className="w-full">
+        <TodoItem todo={todo} />
+      </div>
+    ))}
+  </div>
+</div>
+
       </div>
     </TodoProvider>
   );
